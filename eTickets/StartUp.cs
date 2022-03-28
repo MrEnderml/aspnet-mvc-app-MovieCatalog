@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using eTickets.Data;
+using Microsoft.Extensions.Configuration;
 
 
 namespace eTickets
@@ -12,6 +13,7 @@ namespace eTickets
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>();
             services.AddControllersWithViews();
         }
 
