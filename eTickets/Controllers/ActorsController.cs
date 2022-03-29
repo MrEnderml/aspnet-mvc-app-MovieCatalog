@@ -1,5 +1,6 @@
 ﻿using eTickets.Data;
 using eTickets.Data.Services;
+using eTickets.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eTickets.Controllers
@@ -18,6 +19,22 @@ namespace eTickets.Controllers
         {
             var data = await _service.GetAll();
             return View(data);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("FullName, ProfilePictureURL, Bio")]Actor actor)
+        {
+            if (ModelState["FullName"].Errors.Count == 1 || ModelState["ProfilePictureURL"].Errors.Count == 1 || ModelState["Bio"].Errors.Count == 1)
+            {
+                return View(actor);
+            }
+            _service.Add(actor);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
