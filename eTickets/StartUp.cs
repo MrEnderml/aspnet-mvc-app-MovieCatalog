@@ -25,10 +25,26 @@ namespace eTickets
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async context =>
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            AppDbInitializer.Seed(app);
+
+            /*app.Run(async context =>
             {
                 await context.Response.WriteAsync("Hello all the World");
-            });
+            });*/
 
         }
     }
